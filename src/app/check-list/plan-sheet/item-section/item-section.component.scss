@@ -1,0 +1,29 @@
+wcu-item-section {
+  border: solid 1px lightgray;
+  display: block;
+  padding: 2px 2px 2px 20px ;
+
+  &:hover {
+    border-color: red;
+  }
+}
+
+.wcu-item-section-title {
+  display: inline-block;
+}
+
+.wcu-title-level-3 {
+  font-size: x-large;
+}
+.wcu-title-level-4 {
+  font-size: large;
+}
+.wcu-title-level-5 {
+  font-size: medium;
+}
+.wcu-title-level-6 {
+  font-size: small;
+}
+.wcu-title-level-7 {
+  font-size: x-small;
+}

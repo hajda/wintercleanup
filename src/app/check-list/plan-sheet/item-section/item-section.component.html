@@ -1,0 +1,23 @@
+<input type="checkbox" [ngModel]="item.done" (ngModelChange)="tick(item, !item.done)" />
+<h3 class="wcu-item-section-title wcu-title-level-{{level}}">{{item.title}}</h3>
+<button (click)="openAddItemForm()" *ngIf="!addFormIsOpen">+</button>
+
+<form name="add-item-form" *ngIf="addFormIsOpen">
+  <input type="text" name="new-item-name" [(ngModel)]="newItemTitle" />
+  <input type="textarea" name="new-item-description" [(ngModel)]="newItemDescription" />
+  <button (click)="cancelAddItem()">Cancel</button>
+  <button (click)="addItem(newItemTitle, newItemDescription); newItemTitle = undefined; newItemDescription = undefined; addFormIsOpen = false;">Add</button>
+</form>
+
+<p>{{item.description}}</p>
+<div *ngIf="item.subItems.length">
+  <wcu-item-section *ngFor="let subItem of item.subItems; let i = index"
+                    [item]="subItem"
+                    [level]="level + 1 || 3"
+
+                    (doneChange)="setDone(isDone(item))"
+
+                    title="{{i}}{{subItem.title}}"
+  ></wcu-item-section>
+  <!--|_____><div *ngFor="let subItem of item.subItems">{{subItem.title}}</div>-->
+</div>
