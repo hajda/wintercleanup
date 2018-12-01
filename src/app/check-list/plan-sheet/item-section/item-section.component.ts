@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TaskApiService} from '../../task-api/task-api.service';
 
 @Component({
   selector: 'wcu-item-section',
@@ -15,7 +16,7 @@ export class ItemSectionComponent implements OnInit {
     this.doneChange.emit(item.done);
   }
 
-  constructor() {}
+  constructor(private taskApi: TaskApiService) {}
 
   ngOnInit() {
     // console.log(
@@ -81,17 +82,25 @@ export class ItemSectionComponent implements OnInit {
   /** -------------------------------------------- */
 
   addFormIsOpen: boolean = false;
+
   openAddItemForm() {
     this.addFormIsOpen = true;
   }
+
   cancelAddItem() {
     this.addFormIsOpen = false;
   }
+
   addItem(newItemTitle, newItemDescription) {
-    this.item.subItems.push({
-      title: newItemTitle,
-      description: newItemDescription,
-      subItems: []
-    });
+      let newSubItem = {
+          title: newItemTitle,
+          parent_task_id: this.item.title,
+          description: newItemDescription,
+          subItems: []
+      };
+      this.item.subItems.push(newSubItem);
+
+    this.onDoneChange(this.item);
+    this.taskApi.post(newSubItem);
   }
 }
